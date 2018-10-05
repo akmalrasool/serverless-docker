@@ -1,18 +1,14 @@
 
-FROM node:8.12-alpine as node-angular-cli
+FROM node:8.10
 LABEL maintainer="AKmal Rasool <AkmalRasool@gmail.com>"
 
 RUN apt-get update && \
     apt-get install python-dev -y && \
     apt-get clean
-RUN npm install -g serverless && \
+RUN npm install -g serverless @angular/cli && \
     curl -O https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install awscli
-
-
-#Angular CLI
-RUN npm install -g @angular/cli
 
 
 #WORKDIR /home/svrless
