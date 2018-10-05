@@ -1,5 +1,5 @@
 FROM node:6.10
-LABEL maintainer="Rupak Ganguly <rupakg@gmail.com>"
+LABEL maintainer="AKmal Rasool <AkmalRasool@gmail.com>"
 
 RUN apt-get update && \
     apt-get install python-dev -y && \
