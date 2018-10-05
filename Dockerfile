@@ -1,5 +1,5 @@
 
-FROM node:8.10
+FROM node:8.12-alpine
 LABEL maintainer="AKmal Rasool <AkmalRasool@gmail.com>"
 
 RUN apt-get update && \
