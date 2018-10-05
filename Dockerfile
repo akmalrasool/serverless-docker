@@ -1,5 +1,5 @@
 
-FROM node:8.12-alpine
+FROM node:8.12-alpine as node-angular-cli
 LABEL maintainer="AKmal Rasool <AkmalRasool@gmail.com>"
 
 RUN apt-get update && \
