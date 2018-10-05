@@ -1,4 +1,4 @@
-FROM node:6.10
+FROM node:8.10
 LABEL maintainer="AKmal Rasool <AkmalRasool@gmail.com>"
 
 RUN apt-get update && \
