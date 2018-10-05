@@ -10,7 +10,9 @@ RUN npm install -g serverless && \
     curl -O https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install awscli
-RUN ng --version
+WORKDIR /opt/
+#RUN ng --version
+
 
 #WORKDIR /home/svrless
 CMD ["ng"]
