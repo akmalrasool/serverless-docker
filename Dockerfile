@@ -1,7 +1,7 @@
 
-FROM node:8.10
+FROM node:10.10
 LABEL maintainer="Akmal Rasool <AkmalRasool@gmail.com>"
-
+WORKDIR /opt/
 RUN apt-get update && \
     apt-get install python-dev -y && \
     apt-get clean
@@ -10,8 +10,8 @@ RUN npm install -g serverless && \
     curl -O https://bootstrap.pypa.io/get-pip.py
 RUN python get-pip.py
 RUN pip install awscli
-WORKDIR /opt/
-#RUN ng --version
+
+RUN ng --version
 
 
 #WORKDIR /home/svrless
