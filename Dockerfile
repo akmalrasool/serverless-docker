@@ -1,5 +1,5 @@
 
-FROM node:10.10
+FROM node:8.12.0-alpine
 LABEL maintainer="Akmal Rasool <AkmalRasool@gmail.com>"
 WORKDIR /opt/
 RUN apt-get update && \
@@ -15,5 +15,5 @@ RUN pip install awscli
 
 
 #WORKDIR /home/svrless
-CMD ["ng"]
+#CMD ["ng"]
 
