@@ -1,7 +1,7 @@
 
 FROM ubuntu:xenial
 LABEL maintainer="Akmal Rasool <AkmalRasool@gmail.com>"
-WORKDIR /opt/
+
 
 RUN apt-get update && \
     apt-get install python-dev -y && \
