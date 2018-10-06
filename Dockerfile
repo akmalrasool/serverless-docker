@@ -1,27 +1,55 @@
+FROM ubuntu:16.04
+MAINTAINER Bitbucket Pipelines
 
-FROM ubuntu:xenial
-LABEL maintainer="Akmal Rasool <AkmalRasool@gmail.com>"
+# Install base dependencies
+RUN apt-get update \
+    && apt-get install -y \
+        software-properties-common \
+        build-essential \
+        wget \
+        xvfb \
+        curl \
+        git \
+        mercurial \
+        maven \
+        openjdk-8-jdk \
+        ant \
+        ssh-client \
+        unzip \
+        iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
 
+# Install nvm with node and npm
+ENV NODE_VERSION=8.12.0 \
+    NVM_DIR=/root/.nvm \
+    NVM_VERSION=0.33.11
 
-RUN apt-get update && \
-    apt-get install python-dev -y && \
-    apt-get clean
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default
 
+# Set node path
+ENV NODE_PATH=$NVM_DIR/v$NODE_VERSION/lib/node_modules
 
-RUN apt-get -qq update && apt-get -qq install -y curl ca-certificates --no-install-recommends && \
-curl -sL https://nodejs.org/dist/v10.0.0/node-v10.10.0-linux-x64.tar.gz | tar xz --strip-components=1
-    
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 
-RUN npm install -g serverless @angular/cli && \
-    curl -O https://bootstrap.pypa.io/get-pip.py
-RUN python get-pip.py
-RUN pip install awscli
+# Default to UTF-8 file.encoding
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    LANGUAGE=C.UTF-8
 
-RUN npm --version
+# Xvfb provide an in-memory X-session for tests that require a GUI
+ENV DISPLAY=:99
 
+# Set the path.
+ENV PATH=$NVM_DIR:$NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+# Create dirs and users
+RUN mkdir -p /opt/atlassian/bitbucketci/agent/build \
+    && sed -i '/[ -z \"PS1\" ] && return/a\\ncase $- in\n*i*) ;;\n*) return;;\nesac' /root/.bashrc \
+    && useradd --create-home --shell /bin/bash --uid 1000 pipelines
 
-
-#WORKDIR /home/svrless
-#CMD ["ng"]
-
+WORKDIR /opt/atlassian/bitbucketci/agent/build
+ENTRYPOINT /bin/bash
