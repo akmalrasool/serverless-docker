@@ -21,7 +21,7 @@ RUN apt-get update \
 
 # Install nvm with node and npm
 ENV NODE_VERSION=8.12.0 \
-    NVM_DIR=/root/.nvm \
+    NVM_DIR=~/.nvm \
     NVM_VERSION=0.33.11
 
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v$NVM_VERSION/install.sh | bash \
